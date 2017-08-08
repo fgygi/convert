@@ -1,0 +1,135 @@
+#-------------------------------------------------------------------------------
+#
+# convert.def: definition file for convert.cpp unit conversion program
+#
+# every unit is represented by a node defined by the line:
+#
+#   node shortname longname
+#
+# every relation among units is represented by an edge defined by the line:
+#
+#   edge from_unit conversion_factor to_unit inversion_flag
+#
+# where from_unit and to_unit are the short names of the units, and
+# inversion_flag determines whether the 1/x operation is needed in the
+# conversion.
+#
+# Warning: the presence of loops in a subgraph can lead to ambiguity
+#          in the conversion between to units. The presence of loops
+#          in the definitions is NOT checked.
+#
+#-------------------------------------------------------------------------------
+#
+#  energy and frequency units
+#
+node  eV       electronVolt 
+node  meV      milli_electronVolt
+node  Ry       Rydberg 
+node  Ha       Hartree 
+node  K        Kelvin 
+node  cm-1     wavenumber
+node  THz      TeraHertz 
+node  cal/mol  calorie/mole 
+node  J/mol    Joule/mole 
+node  kcal/mol kilocalorie/mole 
+node  kJ/mol   kiloJoule/mole 
+node  erg      erg 
+node  J        Joule 
+node  cal      calorie 
+#
+# relations among energy units 
+#
+edge  Ry      13.605804       eV  NOINVERT 
+edge  meV         0.001       eV  NOINVERT 
+edge  Ha            2.0       Ry  NOINVERT 
+edge  eV        11604.5        K  NOINVERT 
+edge  eV       8065.479     cm-1  NOINVERT 
+edge  eV      241.79696      THz  NOINVERT 
+edge  eV      2.30604e4  cal/mol  NOINVERT 
+edge  cal/mol     4.184    J/mol  NOINVERT 
+edge  kcal/mol   1000.0  cal/mol  NOINVERT 
+edge  kJ/mol     1000.0    J/mol  NOINVERT 
+edge  cal         4.184        J  NOINVERT 
+edge  eV  1.6021892e-12      erg  NOINVERT 
+edge  erg         1.e-7        J  NOINVERT 
+#
+# time units
+#
+node  hr  hour
+node  min minute
+node  s   second 
+node  ns  nanosecond 
+node  ps  picosecond 
+node  fs  femtosecond 
+node  au_t time_atomic_unit 
+# 
+edge  hr    60 min  NOINVERT
+edge  min   60   s  NOINVERT
+edge  s  1.e9   ns  NOINVERT 
+edge  s  1.e12  ps  NOINVERT 
+edge  s  1.e15  fs  NOINVERT 
+edge  au_t  2.418885e-5  ps  NOINVERT 
+#
+# length units
+#
+node  km    kilometer 
+node  m     meter 
+node  cm    centimeter 
+node  mm    millimeter 
+node  nm    nanometer 
+node  pm    picometer 
+node  Ang   Angstrom 
+node  Bohr  atomic_unit 
+#
+edge  m        0.001   km  NOINVERT 
+edge  m        100.0   cm  NOINVERT 
+edge  m         1.e6   mm  NOINVERT 
+edge  m         1.e9   nm  NOINVERT 
+edge  m        1.e12   pm  NOINVERT 
+edge  m        1.e10  Ang  NOINVERT 
+edge  Bohr  0.529177  Ang  NOINVERT 
+#
+# force
+#
+node au_f Hartree/Bohr
+node N    Newton
+node pN   picoNewton
+node nN   nanoNewton
+#
+edge au_f 8.23886e-08 N NOINVERT
+edge N    1.e9  nN NOINVERT
+edge N    1.e12 pN NOINVERT
+#
+# pressure
+#
+node au_p   Hartree/Bohr^3
+node bar    bar
+node kbar   kilobar
+node Mbar   megabar
+node Pa     pascal
+node MPa    megapascal
+node kPa    kilopascal
+node GPa    gigapascal
+#
+edge au_p 2.94215e+13  Pa  NOINVERT 
+edge GPa        1.e9   Pa  NOINVERT
+edge MPa        1.e6   Pa  NOINVERT
+edge kPa        1.e3   Pa  NOINVERT
+edge kbar        0.1  GPa  NOINVERT
+edge Mbar       1000  kbar NOINVERT
+edge bar        0.001 kbar NOINVERT
+#
+# dipole moment
+#
+node D     Debye
+node eBohr electron*Bohr
+#
+edge D 0.393430307 eBohr NOINVERT
+#
+# relation energy <-> time (hbar)
+#
+edge  eV  4.135701e-15  s  INVERT 
+#
+# relation time <-> length (speed of light)
+#
+edge  s  2.99792458e8  m  NOINVERT 
